@@ -9,9 +9,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 /* Database Import*/
+
 import { DbConnection } from "./database/config";
 
 /* Router Imports */
+
+import usuariosRouter from "./routes/usuarios.routes";
 
 /* Interfaces Imports */
 
@@ -62,13 +65,7 @@ export class App{
 
     /* Routes of the server */
     routes(){
-      this.app.get('/', (req , res ) =>{
-          res.json({
-            "ok":true,
-            "msg":"Hola Mundo"
-          })
-      })
-        // this.app.use('/api',ProductsRouter);
+      this.app.use('/api/usuarios',usuariosRouter);
         // this.app.use('/api/categories',CategoriesRouter);
     }
 
