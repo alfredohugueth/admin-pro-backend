@@ -2,7 +2,7 @@ import { Router } from "express";
 
 /* Controller usuarios */
 
-const { getUsuarios } = require('../controllers/usuarios.controllers')
+const { getUsuarios, crearUsuarios } = require('../controllers/usuarios.controllers')
 
 
 
@@ -16,6 +16,7 @@ const router = Router();
 
 /* Rutas con controladores */
 router.get('/', getUsuarios);
+router.post('/', crearUsuarios);
 
 
 

@@ -53,8 +53,10 @@ export class App{
     /* middleware of the server */
 
     middleware(){
+        /* Configurar CORS*/
         this.app.use(cors());
         this.app.use(logger('dev'));
+        /* Lectura y parseo del body */
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false}));
         this.app.use(cookieParser());
