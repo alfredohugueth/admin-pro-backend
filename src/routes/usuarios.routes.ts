@@ -1,4 +1,9 @@
 import { Router } from "express";
+import { check } from 'express-validator'
+
+/* Middlewares usuarios */
+
+import { validarCampos } from "../middlewares/validar-campos.middleware";
 
 /* Controller usuarios */
 
@@ -15,8 +20,15 @@ const router = Router();
 */
 
 /* Rutas con controladores */
-router.get('/', getUsuarios);
-router.post('/', crearUsuarios);
+router.get( '/', getUsuarios);
+router.post( '/', 
+    [
+        check(  'nombre', 'El nombre es obligatorio.').not().isEmpty(),
+        check(  'password', 'La contraseña es obligatoria ' ).not().isEmpty(),
+        check(  'email', 'El email es obligatorio ').isEmail(),
+        validarCampos
+    ],
+crearUsuarios);
 
 
 
