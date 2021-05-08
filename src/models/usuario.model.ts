@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
+import { Schema, model} from "mongoose";
+import { Users, UsersModel } from "../interfaces/user.interface";
 
-
-const UsuarioSchema:Schema = new Schema({
+const UsuarioSchema = new Schema({
     nombre: {
 
         type:String,
@@ -43,10 +43,10 @@ const UsuarioSchema:Schema = new Schema({
 
 });
 
-UsuarioSchema.method('toJSON', function(){
-    const { __v, _id, ...Object} = this.toObject();
+UsuarioSchema.method('toJSON', function(this:UsersModel){
+    const { __v, _id, password, ...Object} = this.toObject();
     Object['uid'] = _id;
     return Object;
 })
 
-module.exports = model( 'Usuario', UsuarioSchema);
+module.exports = model<Users & Document>( 'Usuario', UsuarioSchema);

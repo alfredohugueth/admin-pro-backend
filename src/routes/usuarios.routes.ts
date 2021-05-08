@@ -7,7 +7,7 @@ import { validarCampos } from "../middlewares/validar-campos.middleware";
 
 /* Controller usuarios */
 
-const { getUsuarios, crearUsuarios } = require('../controllers/usuarios.controllers')
+const { getUsuarios, crearUsuarios, actualizarUsuario } = require('../controllers/usuarios.controllers')
 
 
 
@@ -21,6 +21,7 @@ const router = Router();
 
 /* Rutas con controladores */
 router.get( '/', getUsuarios);
+
 router.post( '/', 
     [
         check(  'nombre', 'El nombre es obligatorio.').not().isEmpty(),
@@ -29,6 +30,17 @@ router.post( '/',
         validarCampos
     ],
 crearUsuarios);
+
+router.put( '/:id', 
+    [
+        check(  'nombre', 'El nombre es obligatorio.').not().isEmpty(),
+        check(  'email', 'El email es obligatorio ').isEmail(),
+        check(  'role', 'El rol es obligatorio ').not().isEmpty(),
+
+        validarCampos  
+    ],
+    actualizarUsuario
+)
 
 
 

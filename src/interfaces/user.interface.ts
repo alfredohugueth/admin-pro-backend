@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
 
 export interface Users extends Document{
@@ -9,3 +9,5 @@ export interface Users extends Document{
     role: string,
     google: boolean,
 }
+
+export interface UsersModel extends Users, Document {}
