@@ -17,6 +17,11 @@ const Usuario:Model<Users & Document> = require('../models/usuario.model');
 
 import HttpStatusCode from '../enums/HttpStatusCode'
 
+/* Helpers imports */
+
+import { generarJWT } from "../helpers/jwt";
+
+
 
 
 /* GET /api/usuarios */
@@ -69,10 +74,16 @@ const crearUsuarios = async( req: Request, res: Response ) =>{
     /* Save user */
     
     await usuario.save();
+
+    /* Generamos el JWT */
+
+    const token = await generarJWT( usuario.id );
+
     res.json({
       
       "ok": true,
-       usuario
+       usuario,
+       token
 
     })
     

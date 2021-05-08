@@ -14,7 +14,11 @@ const Usuario:Model<Users & Document> = require('../models/usuario.model');
 
 /* Enums imports */
 
-import HttpStatusCode from '../enums/HttpStatusCode'
+import HttpStatusCode from '../enums/HttpStatusCode';
+
+/* Helpers imports */
+
+import { generarJWT } from "../helpers/jwt";
 
 /* GET /api/auth */
 
@@ -54,12 +58,16 @@ const login = async ( req : Request, res : Response ) => {
 
         }
 
+        /* Generar el TOKEN JWT */
+
+        const token = await generarJWT( usuarioDB.id );
+
 
 
         res.json({
 
             ok : true,
-            msg : "Hola mundo"
+            token
 
         })
 
