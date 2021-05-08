@@ -15,6 +15,7 @@ import { DbConnection } from "./database/config";
 /* Router Imports */
 
 import usuariosRouter from "./routes/usuarios.routes";
+import authRouter from "./routes/auth.routes";
 
 /* Interfaces Imports */
 
@@ -67,8 +68,8 @@ export class App{
 
     /* Routes of the server */
     routes(){
-      this.app.use('/api/usuarios',usuariosRouter);
-        // this.app.use('/api/categories',CategoriesRouter);
+      this.app.use( '/api/usuarios', usuariosRouter );
+      this.app.use( '/api/login', authRouter );
     }
 
 

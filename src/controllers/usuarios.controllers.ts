@@ -2,6 +2,8 @@
 
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
+import { Model } from "mongoose";
+
 
 /* Interface Imports */
 
@@ -14,11 +16,11 @@ const Usuario:Model<Users & Document> = require('../models/usuario.model');
 /* Enums imports */
 
 import HttpStatusCode from '../enums/HttpStatusCode'
-import { Model } from "mongoose";
 
 
 
 /* GET /api/usuarios */
+
 const getUsuarios = async ( req: Request, res: Response ) =>{
 
 

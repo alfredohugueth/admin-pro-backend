@@ -19,8 +19,6 @@ const router = Router();
 
 */
 
-/* Rutas con controladores */
-
 /* GET /api/usuarios */
 
 router.get( '/', getUsuarios);
