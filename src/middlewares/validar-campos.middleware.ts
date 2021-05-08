@@ -1,8 +1,9 @@
-import { NextFunction, RequestHandler, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { validationResult } from "express-validator";
+import { Middleware } from "express-validator/src/base";
 
 
-export const validarCampos= ( req, res: Response, next:NextFunction ) =>  {
+export const validarCampos : Middleware = ( req : Request, res: Response, next:NextFunction ) =>  {
 
     /* Errores de ruta */
   const errores = validationResult( req );

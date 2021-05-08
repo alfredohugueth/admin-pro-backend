@@ -4,6 +4,7 @@ import { check } from 'express-validator'
 /* Middlewares usuarios */
 
 import { validarCampos } from "../middlewares/validar-campos.middleware";
+import { validarJWT } from "../middlewares/validar-jwt.middleware";
 
 /* Controller usuarios */
 
@@ -21,7 +22,7 @@ const router = Router();
 
 /* GET /api/usuarios */
 
-router.get( '/', getUsuarios);
+router.get( '/', validarJWT ,getUsuarios);
 
 /* POST /api/usuarios */
 
@@ -41,9 +42,10 @@ crearUsuarios);
 router.put( '/:id', 
     [
         
+        validarJWT,
         check(  'nombre', 'El nombre es obligatorio.').not().isEmpty(),
-        check(  'email', 'El email es obligatorio ').isEmail(),
-        check(  'role', 'El rol es obligatorio ').not().isEmpty(),
+        check(  'email',  'El email es obligatorio ') .isEmail(),
+        check(  'role',   'El rol es obligatorio ')   .not().isEmpty(),
 
         validarCampos  
 
@@ -54,7 +56,7 @@ router.put( '/:id',
 /* DELETE /api/usuarios/:id */
 
 router.delete( '/:id',
-
+    validarJWT,
     borrarUsuario
 
 )
