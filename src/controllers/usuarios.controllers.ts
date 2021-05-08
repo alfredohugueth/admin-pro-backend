@@ -27,7 +27,7 @@ const getUsuarios = async ( req: Request, res: Response ) =>{
   res.json({
 
             "ok":true,
-            usuarios
+             usuarios
 
   })
 
@@ -50,7 +50,7 @@ const crearUsuarios = async( req: Request, res: Response ) =>{
 
         return res['status']( 500 ).json({
           
-          ok: false,
+          ok:   false,
           msg: 'El correo ya está registrado. '
 
       });
@@ -70,7 +70,7 @@ const crearUsuarios = async( req: Request, res: Response ) =>{
     res.json({
       
       "ok": true,
-      usuario
+       usuario
 
     })
     
@@ -79,7 +79,7 @@ const crearUsuarios = async( req: Request, res: Response ) =>{
     console.log("🚀 ~ file: usuarios.controllers.ts ~ line 35 ~ crearUsuarios ~ error", error)
     res.status( 500 ).json({
 
-      "ok": false,
+      "ok":   false,
       "msg": 'Error inesperado... revisar logs'
 
     })
@@ -88,6 +88,7 @@ const crearUsuarios = async( req: Request, res: Response ) =>{
 
 } 
 
+/* PUT /api/usuarios/:id */
 
 const actualizarUsuario = async ( req : Request, res : Response ) => {
 
@@ -104,7 +105,7 @@ const actualizarUsuario = async ( req : Request, res : Response ) => {
 
       return res.status(HttpStatusCode.NOT_FOUND).json({
         
-        ok: false,
+        ok:   false,
         msg: "No existe un usuario con ese id."
 
       });
@@ -119,7 +120,7 @@ const actualizarUsuario = async ( req : Request, res : Response ) => {
     
       const existeEmail = await Usuario.findOne({ email });
       if ( existeEmail ) return res.status( HttpStatusCode.BAD_REQUEST ).json({
-        ok : false,
+        ok :    false,
         msg : ' Ya existe un usuario con este email '
       });
 
@@ -143,7 +144,7 @@ const actualizarUsuario = async ( req : Request, res : Response ) => {
     res.statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
     res.json( {
 
-      ok: false,
+      ok:    false,
       msg:  "Error Inesperado."
 
     }) 
@@ -152,9 +153,52 @@ const actualizarUsuario = async ( req : Request, res : Response ) => {
 
 }
 
+/* DELETE /api/usuarios/:id */
+
+const borrarUsuario = async ( req : Request, res : Response ) => {
+
+  const uid = req.params.id;
+
+  try {
+
+    const usuarioDB = await Usuario.findById( uid );
+    if( !usuarioDB ){
+
+      return res.status(HttpStatusCode.NOT_FOUND).json({
+        
+        ok:   false,
+        msg: "No existe un usuario con ese id."
+
+      });
+
+    }
+
+    await Usuario.findByIdAndDelete( uid );
+
+    res.json({
+      
+      ok:   true,
+      msg:  "Usuario Eliminado"
+
+    })
+
+  } catch (error) {
+    console.log(error);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+      
+      ok :   false,
+      msg : 'Hable con el administrador'
+
+    })
+
+  }
+
+}
+
 
 module.exports = {
     getUsuarios,
     crearUsuarios,
-    actualizarUsuario
+    actualizarUsuario,
+    borrarUsuario
 }
