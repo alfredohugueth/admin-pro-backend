@@ -13,10 +13,12 @@ import { check } from 'express-validator'
 /* Middlewares Hospitales */
 
 import { validarCampos } from "../middlewares/validar-campos.middleware";
+import { validarJWT } from "../middlewares/validar-jwt.middleware";
+
 
 /* Controller Hospitales */
 
-import { HospitalController } from "../controllers/hospitales.controller"
+import { HospitalController } from "../controllers/hospitales.controller";
 
 
 const router = Router();
@@ -30,7 +32,11 @@ router.get( '/', hospitalController [ 'getHospitales' ]);
 /* POST /api/hospitales */
 
 router.post( '/', 
-    [],
+    [
+        validarJWT,
+        check( 'nombre', 'El nombre del hospital es necesario.' ).not().isEmpty(),
+        validarCampos 
+    ],
 hospitalController [ 'crearHospital']);
 
 /* PUT /api/hospitales/:id */

@@ -11,12 +11,13 @@ const HospitalSchema = new Schema({
     img: {
 
         type:String,
-
+        
     },
     usuario: {
 
         type: Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: 'Usuario',
+        required: true
 
     }
     
