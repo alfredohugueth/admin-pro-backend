@@ -13,6 +13,8 @@ import { check } from 'express-validator'
 /* Middlewares Medicos */
 
 import { validarCampos } from "../middlewares/validar-campos.middleware";
+import { validarJWT } from "../middlewares/validar-jwt.middleware";
+
 
 /* Controller Medicos */
 
@@ -30,7 +32,12 @@ router.get( '/', medicosController [ 'getMedicos' ]);
 /* POST /api/medicos */
 
 router.post( '/', 
-    [],
+    [
+        validarJWT,
+        check( 'nombre', 'El nombre del Medico es necesario.' ).not().isEmpty(),
+        check( 'hospital', 'El ID del hospital afiliado al medico es necesario' ).not().isEmpty(),
+        validarCampos  
+    ],
 medicosController [ 'crearMedicos']);
 
 /* PUT /api/medicos/:id */
