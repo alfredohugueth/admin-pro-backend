@@ -17,6 +17,7 @@ import { DbConnection } from "./database/config";
 import usuariosRouter from "./routes/usuarios.routes";
 import authRouter from "./routes/auth.routes";
 import hosptialRouter from "./routes/hospitales.routes"
+import medicosRouter from "./routes/medicos.routes"
 
 /* Interfaces Imports */
 
@@ -73,6 +74,7 @@ export class App{
       
       this.app.use( '/api/usuarios', usuariosRouter );
       this.app.use( '/api/hospitales', hosptialRouter );
+      this.app.use( '/api/medicos', medicosRouter );
       this.app.use( '/api/login', authRouter );
     
     }
