@@ -16,12 +16,16 @@ const medico:Model<Medico & Document> = require( '../models/medico.model' );
 
 export class MedicosController { 
 
-    public getMedicos = ( req: Request, res: Response ) => {
+    public getMedicos = async ( req: Request, res: Response ) => {
+
+        const medicos = await medico.find()
+                                    .populate('usuario', 'nombre img')
+                                    .populate('hospital', 'nombre img')
 
         res.json({
             
             ok: true,
-            msg: 'getMedicos'
+            medicos
     
         })
     

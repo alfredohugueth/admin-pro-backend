@@ -17,12 +17,17 @@ const hospital:Model<Hospital & Document> = require('../models/hospital.model');
 
 export class HospitalController { 
 
-    public getHospitales = ( req: Request, res: Response ) => {
+    public getHospitales = async ( req: Request, res: Response ) => {
+
+        const hospitales = await hospital.find()
+                                         .populate( 'usuario', 'nombre img' )
+
+
 
         res.json({
             
             ok: true,
-            msg: 'getHospitales'
+            hospitales
     
         })
     
