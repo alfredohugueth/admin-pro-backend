@@ -19,6 +19,7 @@ import authRouter from "./routes/auth.routes";
 import hosptialRouter from "./routes/hospitales.routes"
 import medicosRouter from "./routes/medicos.routes"
 import busquedaRouter from "./routes/busquedas.routes";
+import uploadsRouter from "./routes/uploads.routes";
 
 /* Interfaces Imports */
 
@@ -78,6 +79,7 @@ export class App{
       this.app.use( '/api/medicos', medicosRouter );
       this.app.use( '/api/login', authRouter );
       this.app.use( '/api/todo', busquedaRouter);
+      this.app.use( '/api/upload', uploadsRouter);
     
     }
 
