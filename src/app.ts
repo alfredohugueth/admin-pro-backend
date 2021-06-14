@@ -18,6 +18,7 @@ import usuariosRouter from "./routes/usuarios.routes";
 import authRouter from "./routes/auth.routes";
 import hosptialRouter from "./routes/hospitales.routes"
 import medicosRouter from "./routes/medicos.routes"
+import busquedaRouter from "./routes/busquedas.routes";
 
 /* Interfaces Imports */
 
@@ -76,6 +77,7 @@ export class App{
       this.app.use( '/api/hospitales', hosptialRouter );
       this.app.use( '/api/medicos', medicosRouter );
       this.app.use( '/api/login', authRouter );
+      this.app.use( '/api/todo', busquedaRouter);
     
     }
 
