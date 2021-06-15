@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { Model } from "mongoose";
 import { v4 as uuidv4 } from 'uuid';
+import * as Path from "path";
+import * as fs from "fs"
 
 /* Interface Imports */
 
@@ -20,6 +22,9 @@ const hospital:Model<Hospital & Document> = require('../models/hospital.model');
 
 import HttpStatusCode from '../enums/HttpStatusCode'
 import fileUpload from "express-fileupload";
+
+/* Helpers imports */
+import { actualizarImagen } from "../helpers/actualizar-imagen";
 
 export class Upload {
 
@@ -81,7 +86,10 @@ export class Upload {
                     msg: 'Error al mover la imagen'
                 })
 
-            } 
+            }
+            
+            /* Actualizar base de datos */
+            actualizarImagen( tipo, id, nombreArchivo);
             
             res.json({
                 
@@ -95,6 +103,27 @@ export class Upload {
 
 
     
+    }
+
+    private returnImage = ( req : Request, res : Response ) => {
+
+        const tipo = req.params[ 'tipo' ];
+        const foto = req.params[ 'img' ];
+
+        const pathImg = Path.join( __dirname, `../../uploads/${ tipo }/${ foto }`);
+
+        // imagen por defecto
+        if ( fs.existsSync( pathImg )) {
+            
+            res.sendFile ( pathImg );
+        
+        } else {
+
+            const path_predeterminado = Path.join( __dirname, '../../uploads/noPicture.png')
+            res.sendFile ( path_predeterminado );
+
+        }
+
     }
 
 }
