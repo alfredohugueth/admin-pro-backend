@@ -19,6 +19,7 @@ import HttpStatusCode from '../enums/HttpStatusCode';
 /* Helpers imports */
 
 import { generarJWT } from "../helpers/jwt";
+import { googleVerify } from "../helpers/google-verify";
 
 /* GET /api/auth */
 
@@ -85,6 +86,38 @@ const login = async ( req : Request, res : Response ) => {
 
 }
 
+const googleSignIn = async ( req : Request, res : Response ) => {
+
+    const googleToken = req.body[ 'token' ];
+
+    try {
+
+        const { name, email, picture } = await googleVerify( googleToken );
+
+        
+        res.json({
+    
+            ok : true,
+            msg : 'Google SignIn',
+            googleToken,
+            name, email, picture
+    
+        })
+
+    } catch (error) {
+        
+        res.status(401).json({
+    
+            ok : false,
+            msg : 'Token no es correcto'
+    
+        })
+
+    }
+
+}
+
 module.exports = {
-    login
+    login,
+    googleSignIn
 }

@@ -43,6 +43,7 @@ export class App{
         this.port = '';
         this.app = express();
         this.middleware();
+        this.Public();
         this.routes();
         this.ServeApi();
         /*DbConnection */
@@ -50,10 +51,7 @@ export class App{
         
         
     }
-    /* DB Info
-    user:mean_user
-    password: FDXjRvfOfIOyMQet
-    */
+    
 
     /* middleware of the server */
 
@@ -68,6 +66,13 @@ export class App{
         
         
         
+    }
+
+    /* Public directory */
+    Public() {
+
+      this.app.use( express.static( 'public' ));
+
     }
 
     /* Routes of the server */

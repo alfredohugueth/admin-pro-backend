@@ -4,7 +4,7 @@ import { validarCampos } from "../middlewares/validar-campos.middleware";
 
 /* Controller login */
 
-const { login } = require ('../controllers/auth.controllers')
+const { login, googleSignIn } = require ('../controllers/auth.controllers')
 
 const router = Router();
 
@@ -27,5 +27,16 @@ router.post ( '/',
     
 )
 
+router.post ( '/google',
+
+    [
+
+        check( 'token', 'El token es obligatorio').not().isEmpty(),
+        validarCampos
+        
+    ],
+    googleSignIn
+    
+)
 export default router;
 
