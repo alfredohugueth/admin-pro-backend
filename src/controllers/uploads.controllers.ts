@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Model } from "mongoose";
+import { v4 as uuidv4 } from 'uuid';
 
 /* Interface Imports */
 
@@ -18,6 +19,7 @@ const hospital:Model<Hospital & Document> = require('../models/hospital.model');
 /* Enums imports */
 
 import HttpStatusCode from '../enums/HttpStatusCode'
+import fileUpload from "express-fileupload";
 
 export class Upload {
 
@@ -49,16 +51,49 @@ export class Upload {
         }
 
         /* Procesas el archivo */
+        const file = req.files [ 'imagen' ];
+        const nombreCortado = file[ 'name' ].split( '.' ); // example.1.3.jpg
+        const extensionArchivo = nombreCortado[ nombreCortado.length - 1];
 
+        /* Validar extension */
+        const extensionesValidas = [ 'png', 'jpg', 'jpeg', 'gif'];
+        if ( !extensionesValidas.includes( extensionArchivo ) ) {
 
-        
+            return res.status(HttpStatusCode.BAD_REQUEST).json({
+                ok : false,
+                msg : 'No es una extension permitida. '
+            });
 
-        res.json({
+        }
+
+        /* Generar nombre del archivo */
+        const nombreArchivo = `${ uuidv4() }.${ extensionArchivo }`;
+
+        /* Path para guardar la imagen */
+        const path = `./uploads/${ tipo }/${ nombreArchivo }`;
+
+        /* Mover archivo */
+        file [ 'mv' ] ( path, ( err ) => {
+            if ( err ) {
+                
+                return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+                    ok: false,
+                    msg: 'Error al mover la imagen'
+                })
+
+            } 
             
-            ok  : true,
-            msg : 'Files Uploads'
+            res.json({
+                
+                ok  : true,
+                msg : 'Archivo Subido',
+                nombreArchivo
+    
+            })
 
         })
+
+
     
     }
 

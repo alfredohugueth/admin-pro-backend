@@ -29,7 +29,6 @@ export const validarJWT : Middleware = ( req : Request, res : Response, next : N
         const verify = jwt.verify( token, process.env.JWT_SECRET );
         if ( verify.hasOwnProperty( 'uid' )) {
             
-            console.log(verify[ 'uid' ]);
             req[ 'uid' ] =  verify[ 'uid' ];
             next();
 
