@@ -67,25 +67,105 @@ export class MedicosController {
     
     }
 
-    public borrarMedicos = ( req: Request, res: Response ) => {
+    public borrarMedicos = async ( req: Request, res: Response ) => {
 
-        res.json({
+        const medicoID = req.params [ 'id' ];
+
+        try {
             
-            ok: true,
-            msg: 'borrarMedicos'
-    
-        })
+            /* Verificamos que exista el medico */
+            const medicoDB = await medico.findById( medicoID );
+            if ( !medicoDB ) {
+
+                return res.status( HttpStatusCode[ 'NOT_FOUND' ]).json({
+
+                    ok : false,
+                    msg : 'Medico no encontrado por id',
+                    medicoID
+
+                });
+
+            }
+
+            /* Eliminamos el registro del medico */
+            await medico.findByIdAndDelete( medicoID );
+
+            /* Respondemos la petición */
+            res.json({
+                
+                ok : true,
+                msg : 'Medico Eliminado',
+
+            })
+
+        } catch (error) {
+
+            console.log( '------> Error en actualización del medico: ', error );
+
+            res.status( HttpStatusCode [ 'INTERNAL_SERVER_ERROR' ]).json({
+                
+                ok :  false,
+                msg: 'hable con el administrador.'
+
+            })
+            
+        }
     
     }
 
-    public actualizarMedicos = ( req: Request, res: Response ) => {
+    public actualizarMedicos = async ( req: Request, res: Response ) => {
 
-        res.json({
+        const medicoID = req.params [ 'id' ];
+        const uid = req [ 'uid' ];
+
+        try {
             
-            ok: true,
-            msg: 'actualizarMedicos'
-    
-        })
+            /* Verificamos que exista el medico */
+            const medicoDB = await medico.findById( medicoID );
+            if ( !medicoDB ) {
+
+                return res.status( HttpStatusCode[ 'NOT_FOUND' ]).json({
+
+                    ok : false,
+                    msg : 'Medico no encontrado por id',
+                    medicoID
+
+                });
+
+            }
+
+            /* Definimos los cambios en el medico */
+            const cambiosMedico = {
+                
+                ...req[ 'body' ],
+                usuario : uid
+
+            };
+
+            /* Actualizamos el valor del medico en la base de datos */
+            const medicoActualizado = await medico.findByIdAndUpdate( medicoID, cambiosMedico, { new : true });
+
+            /* Respondemos la petición */
+            res.json({
+                
+                ok : true,
+                msg : 'Medico Actualizado',
+                medico: medicoActualizado
+
+            })
+
+        } catch (error) {
+
+            console.log( '------> Error en actualización del medico: ', error );
+
+            res.status( HttpStatusCode [ 'INTERNAL_SERVER_ERROR' ]).json({
+                
+                ok :  false,
+                msg: 'hable con el administrador.'
+
+            })
+            
+        }
     
     }
     

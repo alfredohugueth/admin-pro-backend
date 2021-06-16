@@ -42,14 +42,15 @@ hospitalController [ 'crearHospital']);
 /* PUT /api/hospitales/:id */
 
 router.put( '/:id', 
-    [],
+    [ 
+        validarJWT
+    ],
     hospitalController [ 'actualizarHospital' ]
 )
 
 /* DELETE /api/hospitales/:id */
 
-router.delete( '/:id',
-    hospitalController [ 'borrarHospital' ]
+router.delete( '/:id', validarJWT, hospitalController [ 'borrarHospital' ]
 )
 
 

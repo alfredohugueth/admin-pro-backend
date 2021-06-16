@@ -71,14 +71,49 @@ export class HospitalController {
     
     }
 
-    public borrarHospital = ( req: Request, res: Response ) => {
+    public borrarHospital = async ( req: Request, res: Response ) => {
 
-        res.json({
+        const hospitalID = req.params [ 'id' ];
+        
+        try {
+
+            /* Verificamos si existe el hospital */
+            const hospitalDB = await hospital.findById( hospitalID );
+            if ( !hospitalID ) {
+                
+                return res.status( HttpStatusCode[ 'NOT_FOUND' ] ).json({
+                    
+                    ok : false,
+                    msg : 'Hospital no encontrado por id',
+                    hospitalID
+                
+                });
+
+            }
+
+            await hospital.findByIdAndDelete( hospitalID );
+
+
+            res.json({
+                
+                ok: true,
+                msg: 'Hospital eliminado',
+        
+            })
+
+        } catch (error) {
+
+            console.log( '------> Error en eliminación de hospital: ', error );
+
+            res.status( HttpStatusCode [ 'INTERNAL_SERVER_ERROR' ]).json({
+                
+                ok :  false,
+                msg: 'hable con el administrador.'
+
+            })
             
-            ok: true,
-            msg: 'borrarHospital'
-    
-        })
+        }
+
     
     }
 

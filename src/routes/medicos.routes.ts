@@ -43,7 +43,13 @@ medicosController [ 'crearMedicos']);
 /* PUT /api/medicos/:id */
 
 router.put( '/:id', 
-    [],
+    [
+        validarJWT,
+        check( 'nombre', 'El nombre del Medico es necesario.' ).not().isEmpty(),
+        check( 'hospital', 'El ID del hospital afiliado debe ser valido' ).isMongoId(),
+        validarCampos
+        
+    ],
     medicosController [ 'actualizarMedicos' ]
 )
 
