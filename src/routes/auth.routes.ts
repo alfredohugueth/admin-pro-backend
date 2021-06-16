@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.middleware";
+import { validarJWT } from "../middlewares/validar-jwt.middleware";
 
 /* Controller login */
 
-const { login, googleSignIn } = require ('../controllers/auth.controllers')
+const { login, googleSignIn, renewToken } = require ('../controllers/auth.controllers');
 
 const router = Router();
 
@@ -38,5 +39,9 @@ router.post ( '/google',
     googleSignIn
     
 )
+
+router.get ( '/renew', validarJWT, renewToken )
+
+
 export default router;
 

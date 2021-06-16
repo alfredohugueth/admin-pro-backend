@@ -82,14 +82,59 @@ export class HospitalController {
     
     }
 
-    public actualizarHospital = ( req: Request, res: Response ) => {
+    public actualizarHospital = async ( req: Request, res: Response ) => {
+        
+        const hospitalID = req.params [ 'id' ];
+        const uid = req [ 'uid' ];
+        
+        try {
 
-        res.json({
+            /* Verificamos si existe el hospital */
+            const hospitalDB = await hospital.findById( hospitalID );
+            if ( !hospitalID ) {
+                
+                return res.status( HttpStatusCode[ 'NOT_FOUND' ] ).json({
+                    
+                    ok : false,
+                    msg : 'Hospital no encontrado por id',
+                    hospitalID
+                
+                });
+
+            }
+
+            const cambiosHospital = {
+                
+                ...req[ 'body' ],
+                usuario: uid
             
-            ok: true,
-            msg: 'actualizarHospital'
-    
-        })
+            }
+
+            const hospitalActualizado = await hospital.findByIdAndUpdate( hospitalID, cambiosHospital, { new : true });
+
+
+
+            res.json({
+                
+                ok: true,
+                msg: 'Hospital Actualizado',
+                hospital : hospitalActualizado
+        
+            })
+
+        } catch (error) {
+
+            console.log( '------> Error en actualización de hospital: ', error );
+
+            res.status( HttpStatusCode [ 'INTERNAL_SERVER_ERROR' ]).json({
+                
+                ok :  false,
+                msg: 'hable con el administrador.'
+
+            })
+            
+        }
+
     
     }
     
