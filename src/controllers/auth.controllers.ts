@@ -147,6 +147,8 @@ const googleSignIn = async ( req : Request, res : Response ) => {
 
 const renewToken = async ( req : Request, res : Response ) => {
 
+    console.log( 'Se recibe la petición para verificar el JWT ');
+
     const uid = req.params [ 'id' ];
 
     /* Generamos JWT */
@@ -159,7 +161,10 @@ const renewToken = async ( req : Request, res : Response ) => {
         ok : true,
         token
 
-    })
+    });
+
+    /* Manejamos excepciones para el JWT */
+
 }
 
 module.exports = {
