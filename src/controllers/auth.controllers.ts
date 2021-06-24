@@ -149,23 +149,39 @@ const renewToken = async ( req : Request, res : Response ) => {
 
     console.log( 'Se recibe la petición para verificar el JWT ');
 
-    const uid = req.params [ 'id' ];
+    const uid2 = req [ 'uid' ];
 
     /* Generamos JWT */
-    const token = await generarJWT( uid );
+    const token = await generarJWT( uid2 );
 
+    /* Obtener el usuario por uid */
+    const usuarioDB = await Usuario.findById( uid2 );
 
-
-    res.json({
+    /* Si se encuentra el usuario, se devuelve*/
+    
+    if ( usuarioDB ) {
         
-        ok : true,
-        token
+        res.json({
+            
+            ok : true,
+            token,
+            usuario : usuarioDB
+    
+        })
+    
+    } else  {
 
-    });
+        res.json({
+            
+            ok : true,
+            token,
+            msg : 'Usuario no encontrado'
+    
+        });
 
-    /* Manejamos excepciones para el JWT */
+    }
 
-}
+ }
 
 module.exports = {
     login,
