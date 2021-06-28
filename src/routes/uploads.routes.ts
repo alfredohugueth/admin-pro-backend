@@ -25,7 +25,7 @@ const uploadController = new Upload();
 router.use( fileUpload() );
 
 router.put( '/:tipo/:id', validarJWT, uploadController [ 'fileUpload' ] );
-router.get( '/:tipo/:img', validarJWT, uploadController [ 'returnImage' ] );
+router.get( '/:tipo/:img', uploadController [ 'returnImage' ] );
 
 
 export default router
