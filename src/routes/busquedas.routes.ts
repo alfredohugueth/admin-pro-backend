@@ -26,7 +26,7 @@ router.get( '/:busqueda',
         busquedasController [ 'getBusqueda' ]);
 
 router.get('/coleccion/:tabla/:busqueda', validarJWT, busquedasController [ 'getDocumentosColeccion' ])
-
+// api/todo/...
 
 
 

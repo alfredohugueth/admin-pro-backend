@@ -168,6 +168,37 @@ export class MedicosController {
         }
     
     }
+
+
+    public getMedicoByID = async ( req: Request, res: Response ) => {
+
+        const id = req.params.id;
+
+        try 
+        {        
+            const medicoDB = await medico.findById( id )
+                                        .populate('usuario', 'nombre img')
+                                        .populate('hospital', 'nombre img')
+    
+            res.json({
+                
+                ok: true,
+                medicoDB
+        
+            })
+        
+        } 
+        catch (error) 
+        {
+            res.status(HttpStatusCode.NOT_FOUND).json({
+
+                ok : false,
+                msg : 'Medico no encontrado'
+            
+            })   
+        }
+
+    }
     
     
     

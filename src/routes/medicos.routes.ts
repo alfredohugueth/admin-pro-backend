@@ -56,9 +56,14 @@ router.put( '/:id',
 /* DELETE /api/medicos/:id */
 
 router.delete( '/:id',
+    validarJWT,
     medicosController [ 'borrarMedicos' ]
 )
 
+router.get( '/:id',
+    validarJWT,
+    medicosController [ 'getMedicoByID' ]
+)
 
 
 

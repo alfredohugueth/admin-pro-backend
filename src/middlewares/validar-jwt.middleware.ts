@@ -28,11 +28,9 @@ export const validarJWT : Middleware = ( req : Request, res : Response, next : N
 
     try {
 
-        console.log(' Verificamos el token ');
 
         const verify = jwt.verify( token, process.env.JWT_SECRET );
         if ( verify.hasOwnProperty( 'uid' )) {
-            console.log( 'Entra al IF ');
             req[ 'uid' ] =  verify[ 'uid' ];
             next();
 
