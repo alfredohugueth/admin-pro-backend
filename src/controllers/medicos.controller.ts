@@ -190,7 +190,7 @@ export class MedicosController {
         } 
         catch (error) 
         {
-            res.status(HttpStatusCode.NOT_FOUND).json({
+            res.json({
 
                 ok : false,
                 msg : 'Medico no encontrado'
