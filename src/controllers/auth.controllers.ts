@@ -20,6 +20,7 @@ import HttpStatusCode from '../enums/HttpStatusCode';
 
 import { generarJWT } from "../helpers/jwt";
 import { googleVerify } from "../helpers/google-verify";
+import { getMenuFrontEnd } from "../helpers/menu-frontend";
 
 /* GET /api/auth */
 
@@ -68,7 +69,8 @@ const login = async ( req : Request, res : Response ) => {
         res.json({
 
             ok : true,
-            token
+            token,
+            menu : getMenuFrontEnd( usuarioDB.role )
 
         })
 
@@ -128,7 +130,8 @@ const googleSignIn = async ( req : Request, res : Response ) => {
         res.json({
     
             ok : true,
-            token
+            token,
+            menu : getMenuFrontEnd( usuario.role )
     
         })
 
@@ -165,7 +168,8 @@ const renewToken = async ( req : Request, res : Response ) => {
             
             ok : true,
             token,
-            usuario : usuarioDB
+            usuario : usuarioDB,
+            menu : getMenuFrontEnd( usuarioDB.role )
     
         })
     
