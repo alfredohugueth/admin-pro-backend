@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/bin/www.ts --exec ts-node",
-    "start": "node dist/bin/www.js"
+    "start": "node dist/bin/www.js",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "Alfredo Hugueth",
