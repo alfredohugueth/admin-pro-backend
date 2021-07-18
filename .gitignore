@@ -5,4 +5,11 @@ node_modules/
 
 /dist
 
-uploads/
+uploads/hospitales/*.png
+uploads/hospitales/*.jpeg
+
+uploads/usuarios/*.png
+uploads/usuarios/*.jpeg
+
+uploads/medicos/*.png
+uploads/medicos/*.jpeg
