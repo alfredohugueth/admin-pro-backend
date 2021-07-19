@@ -1,12 +1,13 @@
 /* Server Imports */
 
-import express, { Application, NextFunction } from "express";
+import express, { Application, NextFunction, Response } from "express";
 import Http from "http";
 import debug from "debug";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path"
 
 /* Database Import*/
 
@@ -20,6 +21,7 @@ import hosptialRouter from "./routes/hospitales.routes"
 import medicosRouter from "./routes/medicos.routes"
 import busquedaRouter from "./routes/busquedas.routes";
 import uploadsRouter from "./routes/uploads.routes";
+import { angularController } from "./controllers/angular.controllers";
 
 /* Interfaces Imports */
 
@@ -85,6 +87,11 @@ export class App{
       this.app.use( '/api/login', authRouter );
       this.app.use( '/api/todo', busquedaRouter);
       this.app.use( '/api/upload', uploadsRouter);
+
+
+      /* Lo ultimo, rutas de aplicación de angular */
+
+      this.app.get( '*', angularController );
     
     }
 
